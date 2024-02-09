@@ -1,34 +1,45 @@
 const {
-  QueryListOfUsers,
-  QueryUserById,
+  GetListOfUsers,
+  GetUserById,
   DeleteUserById,
-} = require("../service/UserTable");
+  AddNewUser
+} = require("../service/User");
 
-const GetAllUsers = (req, res) => {
-  const userList = QueryListOfUsers();
+const  GetAllUsers = async (req, res) => {
+  const userList = await GetListOfUsers();
 
   // DO SOMETHING WITH THE USER LIST OR JUST RETURN IT
   return res.json(userList);
 };
 
-const GetUser = (req, res) => {
+const GetUser = async (req, res) => {
   const userId = req.params.id;
-  const user = QueryUserById(userId);
+  const user = await GetUserById(userId);
 
   // DO SOMETHING WITH THE USER OR JUST RETURN IT
   return res.json(user);
 };
 
-const DeleteUser = (req, res) => {
+const DeleteUser = async (req, res) => {
   const userId = req.params.id;
-  const user = DeleteUserById(userId);
+  const user = await DeleteUserById(userId);
 
   // DO SOMETHING WITH THE USER OR JUST RETURN IT
   return res.json(user);
+};
+
+const AddUser = async (req, res) => {
+  const user = req.body;
+  console.log(user)
+  const newUser = await AddNewUser(user);
+
+  // DO SOMETHING WITH THE USER OR JUST RETURN IT
+  return res.json(newUser);
 };
 
 module.exports = {
   GetAllUsers,
   GetUser,
   DeleteUser,
+  AddUser
 };
